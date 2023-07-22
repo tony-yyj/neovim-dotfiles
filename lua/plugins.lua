@@ -23,6 +23,22 @@ vim.cmd([[
   augroup end
 ]])
 
+-- Use a protected call so we don't error out on first use
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+    return
+end
+
+
+-- 设置窗口弹出方式安装插件;浮动显示
+packer.init {
+    display=  {
+        open_fn=function()
+            return require("packer.util").float{border="rounded"}
+        end,
+    },
+}
+
 
 -- Install plugins here - `use ...`
 -- Packer.nvim hints
@@ -76,13 +92,43 @@ return require('packer').startup(function(use)
         }
 
         -- neovim tree
-        use {};
         use {
           'nvim-tree/nvim-web-devicons',
-          'nvim-tree/nvim-tree',
+          'nvim-tree/nvim-tree.lua',
           config = [[require('config.nvim-tree')]]
         }
 
+        -- Status line
+        use {
+            'nvim-lualine/lualine.nvim',
+            requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+            config = [[require('config.lualine')]],
+        }
+
+        -- 启动页
+        use {
+            'goolord/alpha-nvim',
+            config = [[require('config.alpha')]], 
+        }
+
+        -- 括号自动补全
+        use {
+            'windwp/nvim-autopairs',
+            after = 'nvim-cmp',
+            config = [[require('config.nvim-autopairs')]],
+        }
+
+        -- 缩进线
+        use "lukas-reineke/indent-blankline.nvim"
+
+        -- Add hooks to LSP to support Linter && Formatter
+        use { 'nvim-lua/plenary.nvim' }
+        use {
+            'jay-babu/mason-null-ls.nvim',
+            after = 'plenary.nvim',
+            requires = { 'jose-elias-alvarez/null-ls.nvim' },
+            config=[[require('config.mason-null-ls')]]
+        }
 
         -- Automatically set up your configuration after cloning packer.nvim
         -- Put this at the end after all plugins
