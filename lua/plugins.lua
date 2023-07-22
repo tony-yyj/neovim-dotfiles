@@ -105,10 +105,15 @@ return require('packer').startup(function(use)
             config = [[require('config.lualine')]],
         }
 
+
         -- 启动页
-        use {
-            'goolord/alpha-nvim',
-            config = [[require('config.alpha')]], 
+         use {
+          'glepnir/dashboard-nvim',
+          event = 'VimEnter',
+          requires = {'nvim-tree/nvim-web-devicons'},
+          config = function()
+            require('config.dashboard')
+          end,
         }
 
         -- 括号自动补全
