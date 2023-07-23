@@ -79,6 +79,12 @@ _G.packer_plugins = {
     path = "/Users/tonyyang/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["alpha-nvim"] = {
+    config = { "require('config.alpha')" },
+    loaded = true,
+    path = "/Users/tonyyang/.local/share/nvim/site/pack/packer/start/alpha-nvim",
+    url = "https://github.com/goolord/alpha-nvim"
+  },
   ["cmp-buffer"] = {
     after_files = { "/Users/tonyyang/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua" },
     load_after = {
@@ -128,14 +134,6 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/Users/tonyyang/.local/share/nvim/site/pack/packer/opt/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
-  },
-  ["dashboard-nvim"] = {
-    config = { "\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21config.dashboard\frequire\0" },
-    loaded = false,
-    needs_bufread = false,
-    only_cond = false,
-    path = "/Users/tonyyang/.local/share/nvim/site/pack/packer/opt/dashboard-nvim",
-    url = "https://github.com/glepnir/dashboard-nvim"
   },
   ["dracula.nvim"] = {
     loaded = true,
@@ -202,7 +200,7 @@ _G.packer_plugins = {
     url = "https://github.com/windwp/nvim-autopairs"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-buffer", "cmp-cmdline", "cmp-nvim-lsp", "cmp-path", "cmp_luasnip", "nvim-autopairs" },
+    after = { "cmp-buffer", "cmp-cmdline", "cmp-nvim-lsp", "nvim-autopairs", "cmp-path", "cmp_luasnip" },
     config = { "require('config.nvim-cmp')" },
     load_after = {
       ["lspkind.nvim"] = true
@@ -255,15 +253,19 @@ time([[Setup for markdown-preview.nvim]], false)
 time([[Config for lualine.nvim]], true)
 require('config.lualine')
 time([[Config for lualine.nvim]], false)
+-- Config for: alpha-nvim
+time([[Config for alpha-nvim]], true)
+require('config.alpha')
+time([[Config for alpha-nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
-vim.cmd [[ packadd LuaSnip ]]
 vim.cmd [[ packadd plenary.nvim ]]
 vim.cmd [[ packadd mason-null-ls.nvim ]]
 
 -- Config for: mason-null-ls.nvim
 require('config.mason-null-ls')
 
+vim.cmd [[ packadd LuaSnip ]]
 time([[Sequenced loading]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
@@ -273,7 +275,7 @@ vim.cmd [[au FileType markdown ++once lua require("packer.load")({'markdown-prev
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'lspkind.nvim', 'dashboard-nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'lspkind.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]

@@ -107,13 +107,9 @@ return require('packer').startup(function(use)
 
 
         -- 启动页
-         use {
-          'glepnir/dashboard-nvim',
-          event = 'VimEnter',
-          requires = {'nvim-tree/nvim-web-devicons'},
-          config = function()
-            require('config.dashboard')
-          end,
+        use {
+            'goolord/alpha-nvim',
+            config = [[require('config.alpha')]],
         }
 
         -- 括号自动补全
